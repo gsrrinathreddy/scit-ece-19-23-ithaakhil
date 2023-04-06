@@ -6,11 +6,28 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import {useState,useEffect}from 'react';
+import { CircularProgress,Box}from '@mui/material';
 
 export default function Qualifications() {
+  let [loader,setLoader]= useState(true);
+    let [Qualification, setQualification]=useState(null);
+
+    const getQualificationData = async () => axios.get('http://localhost:8000/Qualification')
+                                                    .then(res=>{
+                                                        setQualification(res.data)
+                                                        setLoader(false)
+                                                    }).Catch(err => console.log(err))
+
+            useEffect(()=>{
+                getQualificationData();
+
+            },[])
+        console.log("Qualification",Qualification)
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', p: 3}}>
-      <h1 className='mode'>Qualifications</h1>
+      <h1 className='mode'>Qualification</h1>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Sree Chaitanya" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVLq3bWGKgwuPOhgXP1I6F7v8-W4Ts3PAeZFmAVXBXlQ&s" />
